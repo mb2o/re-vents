@@ -22,7 +22,7 @@ class EventForm extends Component {
    };
 
    render() {
-      const { cancelFormOpen } = this.props;
+      const { cancelFormOpen, selectedEvent } = this.props;
       const { title, date, city, venue, hostedBy } = this.state;
 
       return (
