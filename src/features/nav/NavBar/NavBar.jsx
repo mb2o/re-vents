@@ -31,11 +31,11 @@ class NavBar extends Component {
                <Menu.Item>
                   <Button
                      as={Link}
-                     to='/createEvent'
-                     floated='right'
-                     positive
-                     inverted
                      content='Create Event'
+                     floated='right'
+                     inverted
+                     positive
+                     to='/createEvent'
                   />
                </Menu.Item>
                {authenticated ? (
@@ -49,4 +49,4 @@ class NavBar extends Component {
    }
 }
 
-export default NavBar;
+export default withRouter(NavBar);
