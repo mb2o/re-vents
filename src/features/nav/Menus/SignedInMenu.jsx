@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Menu, Dropdown, Image } from "semantic-ui-react";
 
 const SignedInMenu = ({ signOut }) => {
@@ -11,7 +12,12 @@ const SignedInMenu = ({ signOut }) => {
                <Dropdown.Item text='My Events' icon='calendar' />
                <Dropdown.Item text='My Network' icon='users' />
                <Dropdown.Item text='My Profile' icon='user' />
-               <Dropdown.Item text='Settings' icon='settings' />
+               <Dropdown.Item
+                  text='Settings'
+                  icon='settings'
+                  as={Link}
+                  to='/settings'
+               />
                <Dropdown.Item text='Sign Out' icon='power' onClick={signOut} />
             </Dropdown.Menu>
          </Dropdown>
