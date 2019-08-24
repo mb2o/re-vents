@@ -10,6 +10,14 @@ class EventForm extends Component {
       hostedBy: ""
    };
 
+   componentDidMount() {
+      if (this.props.selectedEvent !== null) {
+         this.setState({
+            ...this.props.selectedEvent
+         });
+      }
+   }
+
    handleFormSubmit = (event) => {
       event.preventDefault();
       this.props.createEvent(this.state);
@@ -22,7 +30,7 @@ class EventForm extends Component {
    };
 
    render() {
-      const { cancelFormOpen, selectedEvent } = this.props;
+      const { cancelFormOpen } = this.props;
       const { title, date, city, venue, hostedBy } = this.state;
 
       return (
