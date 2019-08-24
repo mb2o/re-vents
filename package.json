@@ -37,9 +37,6 @@
       "eject": "react-scripts eject",
       "deploy": "npm run build && firebase deploy"
    },
-   "eslintConfig": {
-      "extends": "react-app"
-   },
    "browserslist": {
       "production": [
          ">0.2%",
