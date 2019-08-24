@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import cuid from "cuid";
 import { Grid, Button } from "semantic-ui-react";
 
 import EventForm from "../EventForm/EventForm";
@@ -65,6 +66,16 @@ class EventDashboard extends Component {
       this.setState(({ isOpen }) => ({ isOpen: !isOpen }));
    };
 
+   handleCreateEvent = (newEvent) => {
+      newEvent.id = cuid();
+      newEvent.hostPhotoURL = "/assets/user.png";
+
+      this.setState(({ events }) => ({
+         events: [...events, newEvent],
+         isOpen: false
+      }));
+   };
+
    render() {
       const { events, isOpen } = this.state;
 
@@ -80,7 +91,10 @@ class EventDashboard extends Component {
                   onClick={this.handleIsOpenToggle}
                />
                {isOpen && (
-                  <EventForm cancelFormOpen={this.handleIsOpenToggle} />
+                  <EventForm
+                     cancelFormOpen={this.handleIsOpenToggle}
+                     createEvent={this.handleCreateEvent}
+                  />
                )}
             </Grid.Column>
          </Grid>
