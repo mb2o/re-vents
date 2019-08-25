@@ -6,9 +6,9 @@ import { reduxForm, Field } from "redux-form";
 
 import TextInput from "../../../app/common/form/TextInput";
 import { createEvent, updateEvent } from "../eventActions";
+import TextArea from "../../../app/common/form/TextArea";
 
 class EventForm extends Component {
-
    handleFormSubmit = (event) => {
       event.preventDefault();
 
@@ -46,7 +46,8 @@ class EventForm extends Component {
                      />
                      <Field
                         name='description'
-                        component={TextInput}
+                        component={TextArea}
+                        rows='3'
                         placeholder='Tell us more about your event'
                      />
 
