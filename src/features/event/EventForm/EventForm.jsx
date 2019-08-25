@@ -15,6 +15,7 @@ import DateInput from "../../../app/common/form/DateInput";
 import SelectInput from "../../../app/common/form/SelectInput";
 import TextArea from "../../../app/common/form/TextArea";
 import TextInput from "../../../app/common/form/TextInput";
+import PlaceInput from "../../../app/common/form/PlaceInput";
 
 const validate = combineValidators({
    title: isRequired({ message: "The event title is required" }),
@@ -100,7 +101,7 @@ class EventForm extends Component {
 
                      <Field
                         name='city'
-                        component={TextInput}
+                        component={PlaceInput}
                         placeholder='Where will your event take place?'
                      />
                      <Field
