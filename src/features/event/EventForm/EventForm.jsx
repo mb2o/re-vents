@@ -106,7 +106,7 @@ class EventForm extends Component {
                      />
                      <Field
                         name='venue'
-                        component={TextInput}
+                        component={PlaceInput}
                         placeholder='Event venue'
                      />
                      <Field
