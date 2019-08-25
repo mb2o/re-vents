@@ -11,6 +11,7 @@ import {
 } from "revalidate";
 
 import { createEvent, updateEvent } from "../eventActions";
+import DateInput from "../../../app/common/form/DateInput";
 import SelectInput from "../../../app/common/form/SelectInput";
 import TextArea from "../../../app/common/form/TextArea";
 import TextInput from "../../../app/common/form/TextInput";
@@ -108,7 +109,9 @@ class EventForm extends Component {
                      />
                      <Field
                         name='date'
-                        component={TextInput}
+                        component={DateInput}
+                        value={}
+                        onChange={}
                         placeholder='When will your event take place?'
                      />
 
