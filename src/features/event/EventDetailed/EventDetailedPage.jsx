@@ -31,9 +31,7 @@ const mapStateToProps = (state, ownProps) => {
       event = state.events.filter((event) => event.id === eventId)[0];
    }
 
-   return {
-      event
-   };
+   return { event };
 };
 
 export default connect(mapStateToProps)(EventDetailedPage);
