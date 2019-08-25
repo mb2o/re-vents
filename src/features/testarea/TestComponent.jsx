@@ -5,7 +5,7 @@ import { Button } from "semantic-ui-react";
 import { incrementCounter, decrementCounter } from "./testActions";
 
 const mapStateToProps = (state) => ({
-   data: state.data
+   data: state.test.data
 });
 
 const mapDispatchToProps = {
