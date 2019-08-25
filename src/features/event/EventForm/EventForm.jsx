@@ -3,11 +3,30 @@ import cuid from "cuid";
 import { connect } from "react-redux";
 import { Segment, Form, Button, Grid, Header } from "semantic-ui-react";
 import { reduxForm, Field } from "redux-form";
+import {
+   composeValidators,
+   combineValidators,
+   isRequired,
+   hasLengthGreaterThan
+} from "revalidate";
 
 import { createEvent, updateEvent } from "../eventActions";
-import TextInput from "../../../app/common/form/TextInput";
-import TextArea from "../../../app/common/form/TextArea";
 import SelectInput from "../../../app/common/form/SelectInput";
+import TextArea from "../../../app/common/form/TextArea";
+import TextInput from "../../../app/common/form/TextInput";
+
+const validate = combineValidators({
+   title: isRequired({ message: "The event title is required" }),
+   category: isRequired({ message: "The category is required" }),
+   description: composeValidators(
+      isRequired({ message: "Please enter a description" }),
+      hasLengthGreaterThan(4)({
+         message: "Description needs to be at least 5 characters"
+      })
+   )(),
+   city: isRequired("city"),
+   venue: isRequired("venue")
+});
 
 const category = [
    { key: "drinks", text: "Drinks", value: "drinks" },
@@ -36,7 +55,13 @@ class EventForm extends Component {
    };
 
    render() {
-      const { history, initialValues } = this.props;
+      const {
+         history,
+         initialValues,
+         invalid,
+         submitting,
+         pristine
+      } = this.props;
 
       return (
          <Grid>
@@ -87,7 +112,10 @@ class EventForm extends Component {
                         placeholder='When will your event take place?'
                      />
 
-                     <Button positive type='submit'>
+                     <Button
+                        positive
+                        type='submit'
+                        disabled={invalid || submitting || pristine}>
                         Submit
                      </Button>
                      <Button
@@ -130,4 +158,4 @@ const mapDispatchToProps = {
 export default connect(
    mapStateToProps,
    mapDispatchToProps
-)(reduxForm({ form: "eventForm" })(EventForm));
+)(reduxForm({ form: "eventForm", validate })(EventForm));
