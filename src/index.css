@@ -2,7 +2,7 @@ body {
    background-color: rgb(234, 234, 234) !important;
 }
 
-/*timepicker style*/
+/* timepicker style */
 .react-datepicker__time-container
    .react-datepicker__time
    .react-datepicker__time-box
@@ -20,7 +20,7 @@ body {
    width: 100%;
 }
 
-/*home page styles*/
+/* home page styles */
 
 .masthead {
    display: flex;
@@ -62,7 +62,7 @@ body {
    border: none;
 }
 
-/*end home page styles*/
+/* end home page styles */
 
 /* navbar styles */
 
@@ -101,7 +101,7 @@ body {
    margin-left: 0.5em;
 }
 
-/*chat comments*/
+/* chat comments */
 
 .ui.comments .comment .comments {
    padding-bottom: 0 !important;
