@@ -1,9 +1,9 @@
-import React from "react";
 import { connect } from "react-redux";
+import React from "react";
 
-import TestModal from "./TestModal";
 import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
+import TestModal from "./TestModal";
 
 const modalLookup = {
    TestModal,

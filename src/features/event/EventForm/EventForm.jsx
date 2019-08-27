@@ -1,23 +1,23 @@
 /* global google */
+import { Button, Form, Grid, Header, Segment } from "semantic-ui-react";
+import { Field, reduxForm } from "redux-form";
+import {
+   combineValidators,
+   composeValidators,
+   hasLengthGreaterThan,
+   isRequired
+} from "revalidate";
+import { connect } from "react-redux";
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import React, { Component } from "react";
 import cuid from "cuid";
-import { connect } from "react-redux";
-import { Segment, Form, Button, Grid, Header } from "semantic-ui-react";
-import { reduxForm, Field } from "redux-form";
-import {
-   composeValidators,
-   combineValidators,
-   isRequired,
-   hasLengthGreaterThan
-} from "revalidate";
-import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 import { createEvent, updateEvent } from "../eventActions";
 import DateInput from "../../../app/common/form/DateInput";
+import PlaceInput from "../../../app/common/form/PlaceInput";
 import SelectInput from "../../../app/common/form/SelectInput";
 import TextArea from "../../../app/common/form/TextArea";
 import TextInput from "../../../app/common/form/TextInput";
-import PlaceInput from "../../../app/common/form/PlaceInput";
 
 const validate = combineValidators({
    title: isRequired({ message: "The event title is required" }),
@@ -141,7 +141,7 @@ class EventForm extends Component {
                         onSelect={this.handleCitySelect}
                         placeholder='Where will your event take place?'
                      />
-                     <Field 
+                     <Field
                         name='venue'
                         component={PlaceInput}
                         options={{

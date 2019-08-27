@@ -1,5 +1,5 @@
-import React, { Fragment } from "react";
 import { Header, Segment } from "semantic-ui-react";
+import React, { Fragment } from "react";
 
 const EventActivity = () => {
    return (

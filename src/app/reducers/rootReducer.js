@@ -1,8 +1,8 @@
+import { reducer as FormReducer } from "redux-form";
+import { reducer as ToastrReducer } from "react-redux-toastr";
 import { combineReducers } from "redux";
 import { firebaseReducer } from "react-redux-firebase";
 import { firestoreReducer } from "redux-firestore";
-import { reducer as FormReducer } from "redux-form";
-import { reducer as ToastrReducer } from "react-redux-toastr";
 
 import asyncReducer from "../../features/async/asyncReducer";
 import authReducer from "../../features/auth/authReducer";

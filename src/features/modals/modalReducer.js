@@ -1,5 +1,5 @@
+import { MODAL_CLOSE, MODAL_OPEN } from "./modalConstants";
 import { createReducer } from "../../app/common/util/reducerUtils";
-import { MODAL_OPEN, MODAL_CLOSE } from "./modalConstants";
 
 const initialState = null;
 
@@ -8,7 +8,7 @@ const openModal = (state, payload) => {
    return { modalType, modalProps };
 };
 
-const closeModal = (state) => {
+const closeModal = () => {
    return null;
 };
 

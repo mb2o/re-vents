@@ -1,6 +1,6 @@
-import React from "react";
+import { Dropdown, Image, Menu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import { Menu, Dropdown, Image } from "semantic-ui-react";
+import React from "react";
 
 const SignedInMenu = ({ signOut, currentUser }) => {
    return (
@@ -8,17 +8,17 @@ const SignedInMenu = ({ signOut, currentUser }) => {
          <Image avatar spaced='right' src='/assets/user.png' />
          <Dropdown pointing='top left' text={currentUser}>
             <Dropdown.Menu>
-               <Dropdown.Item text='Create Event' icon='plus' />
-               <Dropdown.Item text='My Events' icon='calendar' />
-               <Dropdown.Item text='My Network' icon='users' />
-               <Dropdown.Item text='My Profile' icon='user' />
+               <Dropdown.Item icon='plus' text='Create Event' />
+               <Dropdown.Item icon='calendar' text='My Events' />
+               <Dropdown.Item icon='users' text='My Network' />
+               <Dropdown.Item icon='user' text='My Profile' />
                <Dropdown.Item
-                  text='Settings'
-                  icon='settings'
                   as={Link}
+                  icon='settings'
+                  text='Settings'
                   to='/settings'
                />
-               <Dropdown.Item onClick={signOut} text='Sign Out' icon='power' />
+               <Dropdown.Item icon='power' onClick={signOut} text='Sign Out' />
             </Dropdown.Menu>
          </Dropdown>
       </Menu.Item>

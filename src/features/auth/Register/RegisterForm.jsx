@@ -1,6 +1,6 @@
-import React from "react";
-import { Form, Segment, Button } from "semantic-ui-react";
+import { Button, Form, Segment } from "semantic-ui-react";
 import { Field, reduxForm } from "redux-form";
+import React from "react";
 
 import TextInput from "../../../app/common/form/TextInput";
 
@@ -10,24 +10,24 @@ const RegisterForm = () => {
          <Form size='large'>
             <Segment>
                <Field
+                  component={TextInput}
                   name='displayName'
-                  type='text'
-                  component={TextInput}
                   placeholder='Known As'
-               />
-               <Field
-                  name='email'
                   type='text'
-                  component={TextInput}
-                  placeholder='Email'
                />
                <Field
-                  name='password'
-                  type='password'
                   component={TextInput}
-                  placeholder='Password'
+                  name='email'
+                  placeholder='Email'
+                  type='text'
                />
-               <Button fluid size='large' color='teal'>
+               <Field
+                  component={TextInput}
+                  name='password'
+                  placeholder='Password'
+                  type='password'
+               />
+               <Button color='teal' fluid size='large'>
                   Register
                </Button>
             </Segment>

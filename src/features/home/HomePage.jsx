@@ -1,32 +1,32 @@
-import React from "react";
 import {
-   Segment,
+   Button,
    Container,
    Header,
+   Icon,
    Image,
-   Button,
-   Icon
+   Segment
 } from "semantic-ui-react";
+import React from "react";
 
 const HomePage = ({ history }) => {
    return (
-      <Segment inverted textAlign='center' vertical className='masthead'>
+      <Segment className='masthead' inverted textAlign='center' vertical>
          <Container text>
             <Header as='h1' inverted>
                <Image
+                  alt='logo'
                   size='massive'
                   src='/assets/logo.png'
-                  alt='logo'
                   style={{ marginBottom: 12 }}
                />
                Re-vents
             </Header>
             <Button
-               size='huge'
                inverted
-               onClick={() => history.push("/events")}>
+               onClick={() => history.push("/events")}
+               size='huge'>
                Get started
-               <Icon name='right arrow' inverted />
+               <Icon inverted name='right arrow' />
             </Button>
          </Container>
       </Segment>

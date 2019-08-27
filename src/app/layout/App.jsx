@@ -1,24 +1,24 @@
-import React, { Component, Fragment } from "react";
 import { Container } from "semantic-ui-react";
-import { Route, withRouter, Switch } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
+import React, { Component, Fragment } from "react";
 
 import EventDashboard from "../../features/event/EventDashboard/EventDashboard";
 import EventDetailedPage from "../../features/event/EventDetailed/EventDetailedPage";
 import EventForm from "../../features/event/EventForm/EventForm";
 import HomePage from "../../features/home/HomePage";
+import ModalManager from "../../features/modals/ModalManager";
 import NavBar from "../../features/nav/NavBar/NavBar";
 import PeopleDashboard from "../../features/user/PeopleDashboard/PeopleDashboard";
 import SettingsDashboard from "../../features/user/Settings/SettingsDashboard";
 import TestComponent from "../../features/testarea/TestComponent";
 import UserDetailedPage from "../../features/user/UserDetailed/UserDetailedPage";
-import ModalManager from "../../features/modals/ModalManager";
 
 class App extends Component {
    render() {
       return (
          <Fragment>
             <ModalManager />
-            <Route exact path='/' component={HomePage} />
+            <Route component={HomePage} exact path='/' />
             <Route
                path='/(.+)'
                render={() => (
@@ -27,28 +27,28 @@ class App extends Component {
                      <Container className='main'>
                         <Switch key={this.props.location.key}>
                            <Route
+                              component={EventDashboard}
                               exact
                               path='/events'
-                              component={EventDashboard}
                            />
                            <Route
-                              path='/events/:id'
                               component={EventDetailedPage}
+                              path='/events/:id'
                            />
-                           <Route path='/people' component={PeopleDashboard} />
+                           <Route component={PeopleDashboard} path='/people' />
                            <Route
-                              path='/profile/:id'
                               component={UserDetailedPage}
+                              path='/profile/:id'
                            />
                            <Route
-                              path='/settings'
                               component={SettingsDashboard}
+                              path='/settings'
                            />
                            <Route
-                              path={["/createEvent", "/manage/:id"]}
                               component={EventForm}
+                              path={["/createEvent", "/manage/:id"]}
                            />
-                           <Route path='/test' component={TestComponent} />
+                           <Route component={TestComponent} path='/test' />
                         </Switch>
                      </Container>
                   </Fragment>

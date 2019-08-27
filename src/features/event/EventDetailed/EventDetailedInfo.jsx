@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Segment, Grid, Icon, Button } from "semantic-ui-react";
-import EventDetailedMap from "./EventDetailedMap";
+import { Button, Grid, Icon, Segment } from "semantic-ui-react";
 import { format, parseISO } from "date-fns";
+import EventDetailedMap from "./EventDetailedMap";
+import React, { useState } from "react";
 
 const EventDetailedInfo = ({ event }) => {
    const [isMapOpen, showMapToggle] = useState(false);
@@ -11,7 +11,7 @@ const EventDetailedInfo = ({ event }) => {
          <Segment attached='top'>
             <Grid>
                <Grid.Column width={1}>
-                  <Icon size='large' color='teal' name='info' />
+                  <Icon color='teal' name='info' size='large' />
                </Grid.Column>
                <Grid.Column width={15}>
                   <p>{event.description}</p>
@@ -21,7 +21,7 @@ const EventDetailedInfo = ({ event }) => {
          <Segment attached>
             <Grid verticalAlign='middle'>
                <Grid.Column width={1}>
-                  <Icon name='calendar' size='large' color='teal' />
+                  <Icon color='teal' name='calendar' size='large' />
                </Grid.Column>
                <Grid.Column width={15}>
                   {event.date && (
@@ -36,7 +36,7 @@ const EventDetailedInfo = ({ event }) => {
          <Segment attached>
             <Grid verticalAlign='middle'>
                <Grid.Column width={1}>
-                  <Icon name='marker' size='large' color='teal' />
+                  <Icon color='teal' name='marker' size='large' />
                </Grid.Column>
                <Grid.Column width={11}>
                   <span>{event.venue}</span>
@@ -44,9 +44,9 @@ const EventDetailedInfo = ({ event }) => {
                <Grid.Column width={4}>
                   <Button
                      color='teal'
-                     size='tiny'
                      content={isMapOpen ? "Hide Map" : "Show Map"}
                      onClick={() => showMapToggle(!isMapOpen)}
+                     size='tiny'
                   />
                </Grid.Column>
             </Grid>

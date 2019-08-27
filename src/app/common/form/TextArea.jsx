@@ -1,5 +1,5 @@
-import React from "react";
 import { Form, Label } from "semantic-ui-react";
+import React from "react";
 
 const TextArea = ({
    input,
@@ -14,8 +14,9 @@ const TextArea = ({
          <textarea
             {...input}
             placeholder={placeholder}
+            rows={rows}
             type={type}
-            rows={rows}></textarea>
+         />
          {touched && error && (
             <Label basic color='red'>
                {error}

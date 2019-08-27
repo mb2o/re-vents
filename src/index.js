@@ -1,22 +1,17 @@
+import * as serviceWorker from "./serviceWorker";
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import { configureStore } from "./app/store/configureStore";
+import App from "./app/layout/App";
 import React from "react";
 import ReactDOM from "react-dom";
 import ReduxToastr from "react-redux-toastr";
-import { BrowserRouter } from "react-router-dom";
-import { Provider } from "react-redux";
-
-import App from "./app/layout/App";
 import ScrollToTop from "./app/common/util/ScrollToTop";
-import * as serviceWorker from "./serviceWorker";
-import { configureStore } from "./app/store/configureStore";
-import { loadEvents } from "./features/event/eventActions";
 
-import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 import "./index.css";
+import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 
 const store = configureStore();
-
-// Load our events
-store.dispatch(loadEvents());
 
 const rootEl = document.getElementById("root");
 

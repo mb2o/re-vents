@@ -1,15 +1,15 @@
-import { fetchSampleData } from "../../app/data/mockApi";
 import {
    CREATE_EVENT,
-   UPDATE_EVENT,
    DELETE_EVENT,
-   FETCH_EVENTS
+   FETCH_EVENTS,
+   UPDATE_EVENT
 } from "./eventConstants";
 import {
-   asyncActionStart,
+   asyncActionError,
    asyncActionFinish,
-   asyncActionError
+   asyncActionStart
 } from "../async/asyncActions";
+import { fetchSampleData } from "../../app/data/mockApi";
 import { toastr } from "react-redux-toastr";
 
 export const createEvent = (event) => {

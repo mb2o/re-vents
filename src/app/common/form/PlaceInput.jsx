@@ -1,6 +1,6 @@
-import React from "react";
+import { Form, Label, List, Segment } from "semantic-ui-react";
 import PlacesAutocomplete from "react-places-autocomplete";
-import { Form, Label, Segment, List } from "semantic-ui-react";
+import React from "react";
 
 const PlaceInput = ({
    input: { value, onChange, onBlur },
@@ -12,10 +12,10 @@ const PlaceInput = ({
 }) => {
    return (
       <PlacesAutocomplete
-         value={value}
          onChange={onChange}
+         onSelect={onSelect}
          searchOptions={options}
-         onSelect={onSelect}>
+         value={value}>
          {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
             <Form.Field error={touched && !!error}>
                <input

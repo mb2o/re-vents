@@ -1,16 +1,16 @@
-import React, { Component } from "react";
 import { Modal } from "semantic-ui-react";
 import { connect } from "react-redux";
+import React, { Component } from "react";
 
-import LoginForm from "../auth/Login/LoginForm";
 import { closeModal } from "./modalActions";
+import LoginForm from "../auth/Login/LoginForm";
 
 const actions = { closeModal };
 
 class LoginModal extends Component {
    render() {
       return (
-         <Modal size='mini' open={true} onClose={this.props.closeModal}>
+         <Modal onClose={this.props.closeModal} open size='mini'>
             <Modal.Header>Login to Re-vents</Modal.Header>
             <Modal.Content>
                <Modal.Description>

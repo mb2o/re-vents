@@ -1,7 +1,7 @@
-import React from "react";
-import { Segment, Image, Item, Header, Button } from "semantic-ui-react";
+import { Button, Header, Image, Item, Segment } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { format, parseISO } from "date-fns";
+import React from "react";
 
 const eventImageStyle = {
    filter: "brightness(30%)"
@@ -19,10 +19,10 @@ const eventImageTextStyle = {
 const EventDetailedHeader = ({ event }) => {
    return (
       <Segment.Group>
-         <Segment basic attached='top' style={{ padding: "0" }}>
+         <Segment attached='top' basic style={{ padding: "0" }}>
             <Image
-               src={`/assets/categoryImages/${event.category}.jpg`}
                fluid
+               src={`/assets/categoryImages/${event.category}.jpg`}
                style={eventImageStyle}
             />
 
@@ -31,8 +31,8 @@ const EventDetailedHeader = ({ event }) => {
                   <Item>
                      <Item.Content>
                         <Header
-                           size='huge'
                            content={event.title}
+                           size='huge'
                            style={{ color: "white" }}
                         />
                         <p>
@@ -53,9 +53,9 @@ const EventDetailedHeader = ({ event }) => {
             <Button color='teal'>JOIN EVENT</Button>
 
             <Button
+               as={Link}
                color='orange'
                floated='right'
-               as={Link}
                to={`/manage/${event.id}`}>
                Manage Event
             </Button>

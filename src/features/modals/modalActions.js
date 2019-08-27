@@ -1,4 +1,4 @@
-import { MODAL_OPEN, MODAL_CLOSE } from "./modalConstants";
+import { MODAL_CLOSE, MODAL_OPEN } from "./modalConstants";
 
 export const openModal = (modalType, modalProps) => {
    return {
@@ -15,4 +15,3 @@ export const closeModal = () => {
       type: MODAL_CLOSE
    };
 };
-

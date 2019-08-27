@@ -1,15 +1,15 @@
+import { Button, Comment, Form, Header, Segment } from "semantic-ui-react";
 import React, { Fragment } from "react";
-import { Segment, Comment, Header, Form, Button } from "semantic-ui-react";
 
 const EventDetailedChat = () => {
    return (
       <Fragment>
          <Segment
-            textAlign='center'
             attached='top'
-            inverted
             color='teal'
-            style={{ border: "none" }}>
+            inverted
+            style={{ border: "none" }}
+            textAlign='center'>
             <Header>Chat about this event</Header>
          </Segment>
 
@@ -85,8 +85,8 @@ const EventDetailedChat = () => {
                   <Form.TextArea />
                   <Button
                      content='Add Reply'
-                     labelPosition='left'
                      icon='edit'
+                     labelPosition='left'
                      primary
                   />
                </Form>
