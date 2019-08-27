@@ -7,10 +7,14 @@ import App from "./app/layout/App";
 import ScrollToTop from "./app/common/util/ScrollToTop";
 import * as serviceWorker from "./serviceWorker";
 import { configureStore } from "./app/store/configureStore";
+import { loadEvents } from "./features/event/eventActions";
 
 import "./index.css";
 
 const store = configureStore();
+
+// Load our events
+store.dispatch(loadEvents());
 
 const rootEl = document.getElementById("root");
 
