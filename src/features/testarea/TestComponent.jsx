@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button } from "semantic-ui-react";
 
-import { incrementCounter, decrementCounter } from "./testActions";
+import { incrementAsync, decrementAsync } from "./testActions";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import { openModal } from "../modals/modalActions";
 
@@ -29,9 +29,10 @@ class TestComponent extends Component {
    render() {
       const {
          data,
-         incrementCounter,
-         decrementCounter,
-         openModal
+         incrementAsync,
+         decrementAsync,
+         openModal,
+         loading
       } = this.props;
 
       return (
@@ -39,11 +40,13 @@ class TestComponent extends Component {
             <h1>Test Component</h1>
             <h3>The answer is: {data}</h3>
             <Button
-               onClick={incrementCounter}
+               loading={loading}
+               onClick={incrementAsync}
                positive
                content='Increment'></Button>
             <Button
-               onClick={decrementCounter}
+               loading={loading}
+               onClick={decrementAsync}
                negative
                content='Decrement'></Button>
             <Button
@@ -62,12 +65,13 @@ class TestComponent extends Component {
 }
 
 const mapStateToProps = (state) => ({
-   data: state.test.data
+   data: state.test.data,
+   loading: state.async.loading
 });
 
 const mapDispatchToProps = {
-   incrementCounter,
-   decrementCounter,
+   incrementAsync,
+   decrementAsync,
    openModal
 };
 

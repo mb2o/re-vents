@@ -1,4 +1,4 @@
-import createReducer from "../../app/common/util/reducerUtils";
+import { createReducer } from "../../app/common/util/reducerUtils";
 import {
    ASYNC_ACTION_ERROR,
    ASYNC_ACTION_START,
