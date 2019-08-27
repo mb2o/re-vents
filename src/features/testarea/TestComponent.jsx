@@ -32,32 +32,42 @@ class TestComponent extends Component {
          incrementAsync,
          decrementAsync,
          openModal,
-         loading
+         loading,
+         buttonName
       } = this.props;
 
       return (
          <div>
             <h1>Test Component</h1>
             <h3>The answer is: {data}</h3>
+
             <Button
-               loading={loading}
-               onClick={incrementAsync}
+               name='increment'
+               loading={buttonName === "increment" && loading}
+               onClick={(e) => incrementAsync(e.target.name)}
                positive
                content='Increment'></Button>
+
             <Button
-               loading={loading}
-               onClick={decrementAsync}
+               name='decrement'
+               loading={buttonName === "decrement" && loading}
+               onClick={(e) => decrementAsync(e.target.name)}
                negative
                content='Decrement'></Button>
+
             <Button
                color='teal'
                content='Open Modal'
                onClick={() => openModal("TestModal", { date: 42 })}
             />
+
             <br />
             <br />
+
             <TestPlaceInput selectAddress={this.handleSelect} />
+
             <br />
+
             <SimpleMap key={this.state.latlng.lng} latlng={this.state.latlng} />
          </div>
       );
@@ -66,7 +76,8 @@ class TestComponent extends Component {
 
 const mapStateToProps = (state) => ({
    data: state.test.data,
-   loading: state.async.loading
+   loading: state.async.loading,
+   buttonName: state.async.elementName
 });
 
 const mapDispatchToProps = {
