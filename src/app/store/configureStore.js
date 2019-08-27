@@ -1,13 +1,26 @@
 import thunk from "redux-thunk";
+import { reactReduxFirebase, getFirebase } from "react-redux-firebase";
+import { reduxFirestore, getFirestore } from "redux-firestore";
 import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 
+import firebase from "../config/firebase";
 import rootReducer from "../reducers/rootReducer";
 
-export const configureStore = () => {
-   const middleware = [thunk];
+const rrfConfig = {
+   userProfile: "users",
+   attachAuthIsReady: true,
+   useFirestoreForProfile: true
+};
 
-   const composedEnhancer = composeWithDevTools(applyMiddleware(...middleware));
+export const configureStore = () => {
+   const middleware = [thunk.withExtraArgument({ getFirebase, getFirestore })];
+
+   const composedEnhancer = composeWithDevTools(
+      applyMiddleware(...middleware),
+      reactReduxFirebase(firebase, rrfConfig),
+      reduxFirestore(firebase)
+   );
 
    const store = createStore(rootReducer, composedEnhancer);
 
