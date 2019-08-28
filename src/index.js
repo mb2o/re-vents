@@ -40,6 +40,9 @@ if (module.hot) {
    });
 }
 
-render();
+// rendering won't take place until our authentication is ready
+store.firebaseAuthIsReady.then(() => {
+   render();
+});
 
 serviceWorker.unregister();

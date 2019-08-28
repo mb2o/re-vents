@@ -30,67 +30,75 @@ const AccountPage = ({
    handleSubmit,
    invalid,
    submitting,
-   updatePassword
+   updatePassword,
+   providerId
 }) => {
    return (
       <Segment>
          <Header content='Account' dividing size='large' />
-         <div>
-            <Header color='teal' content='Change password' sub />
-            <p>Use this form to update your account settings</p>
-            <Form onSubmit={handleSubmit(updatePassword)}>
-               <Field
-                  basic={true}
-                  component={TextInput}
-                  inline={true}
-                  name='newPassword1'
-                  placeholder='New Password'
-                  pointing='left'
-                  type='password'
-                  width={8}
-               />
-               <Field
-                  basic={true}
-                  component={TextInput}
-                  inline={true}
-                  name='newPassword2'
-                  placeholder='Confirm Password'
-                  pointing='left'
-                  type='password'
-                  width={8}
-               />
-               {error && (
-                  <Label basic color='red'>
-                     {error}
-                  </Label>
-               )}
-               <Divider />
-               <Button
-                  content='Update Password'
-                  disabled={invalid || submitting}
-                  positive
-                  size='large'
-               />
-            </Form>
-         </div>
 
-         <div>
-            <Header color='teal' content='Facebook Account' sub />
-            <p>Please visit Facebook to update your account settings</p>
-            <Button color='facebook' type='button'>
-               <Icon name='facebook' />
-               Go to Facebook
-            </Button>
-         </div>
+         {providerId && providerId === "password" && (
+            <div>
+               <Header color='teal' content='Change password' sub />
+               <p>Use this form to update your account settings</p>
+               <Form onSubmit={handleSubmit(updatePassword)}>
+                  <Field
+                     basic={true}
+                     component={TextInput}
+                     inline={true}
+                     name='newPassword1'
+                     placeholder='New Password'
+                     pointing='left'
+                     type='password'
+                     width={8}
+                  />
+                  <Field
+                     basic={true}
+                     component={TextInput}
+                     inline={true}
+                     name='newPassword2'
+                     placeholder='Confirm Password'
+                     pointing='left'
+                     type='password'
+                     width={8}
+                  />
+                  {error && (
+                     <Label basic color='red'>
+                        {error}
+                     </Label>
+                  )}
+                  <Divider />
+                  <Button
+                     content='Update Password'
+                     disabled={invalid || submitting}
+                     positive
+                     size='large'
+                  />
+               </Form>
+            </div>
+         )}
 
-         <div>
-            <Header color='teal' content='Google Account' sub />
-            <p>Please visit Google to update your account settings</p>
-            <Button color='google plus' type='button'>
-               <Icon name='google plus' />
-               Go to Google
-            </Button>
-         </div>
+         {providerId && providerId === "facebook.com" && (
+            <div>
+               <Header color='teal' content='Facebook Account' sub />
+               <p>Please visit Facebook to update your account settings</p>
+               <Button color='facebook' type='button'>
+                  <Icon name='facebook' />
+                  Go to Facebook
+               </Button>
+            </div>
+         )}
+
+         {providerId && providerId === "google.com" && (
+            <div>
+               <Header color='teal' content='Google Account' sub />
+               <p>Please visit Google to update your account settings</p>
+               <Button color='google plus' type='button'>
+                  <Icon name='google plus' />
+                  Go to Google
+               </Button>
+            </div>
+         )}
       </Segment>
    );
 };
