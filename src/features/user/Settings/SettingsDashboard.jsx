@@ -6,7 +6,7 @@ import { updateProfile } from "../../user/userActions";
 import AboutPage from "./AboutPage";
 import AccountPage from "./AccountPage";
 import BasicPage from "./BasicPage";
-import PhotosPage from "./PhotosPage";
+import PhotosPage from "./Photos/PhotosPage";
 import React from "react";
 import SettingsNav from "./SettingsNav";
 
