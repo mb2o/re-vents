@@ -9,7 +9,7 @@ import PhotosPage from "./PhotosPage";
 import React from "react";
 import SettingsNav from "./SettingsNav";
 
-const SettingsDashboard = ({ updatePassword }) => {
+const SettingsDashboard = ({ updatePassword, providerId }) => {
    return (
       <Grid>
          <Grid.Column width={12}>
@@ -20,7 +20,12 @@ const SettingsDashboard = ({ updatePassword }) => {
                <Route component={PhotosPage} path='/settings/photos' />
                <Route
                   path='/settings/account'
-                  render={() => <AccountPage updatePassword={updatePassword} />}
+                  render={() => (
+                     <AccountPage
+                        providerId={providerId}
+                        updatePassword={updatePassword}
+                     />
+                  )}
                />
             </Switch>
          </Grid.Column>
@@ -31,7 +36,13 @@ const SettingsDashboard = ({ updatePassword }) => {
    );
 };
 
+// Component loads before our firebase auth data,
+// so wrap render() in firebaseAuthIsReady in index.js
+const mapStateToProps = (state) => ({
+   providerId: state.firebase.auth.providerData[0].providerId
+});
+
 export default connect(
-   null,
+   mapStateToProps,
    { updatePassword }
 )(SettingsDashboard);
