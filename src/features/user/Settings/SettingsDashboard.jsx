@@ -2,6 +2,7 @@ import { Grid } from "semantic-ui-react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import { updatePassword } from "../../auth/authActions";
+import { updateProfile } from "../../user/userActions";
 import AboutPage from "./AboutPage";
 import AccountPage from "./AccountPage";
 import BasicPage from "./BasicPage";
@@ -9,7 +10,12 @@ import PhotosPage from "./PhotosPage";
 import React from "react";
 import SettingsNav from "./SettingsNav";
 
-const SettingsDashboard = ({ updatePassword, providerId, user }) => {
+const SettingsDashboard = ({
+   updatePassword,
+   providerId,
+   user,
+   updateProfile
+}) => {
    return (
       <Grid>
          <Grid.Column width={12}>
@@ -17,7 +23,12 @@ const SettingsDashboard = ({ updatePassword, providerId, user }) => {
                <Redirect exact from='/settings' to='/settings/basic' />
                <Route
                   path='/settings/basic'
-                  render={() => <BasicPage initialValues={user} />}
+                  render={() => (
+                     <BasicPage
+                        initialValues={user}
+                        updateProfile={updateProfile}
+                     />
+                  )}
                />
                <Route component={AboutPage} path='/settings/about' />
                <Route component={PhotosPage} path='/settings/photos' />
@@ -48,5 +59,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
    mapStateToProps,
-   { updatePassword }
+   { updatePassword, updateProfile }
 )(SettingsDashboard);
