@@ -1,4 +1,4 @@
-import { Button, Form, Segment } from "semantic-ui-react";
+import { Button, Form, Label, Segment } from "semantic-ui-react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import { login } from "../authActions";
@@ -6,7 +6,7 @@ import React from "react";
 
 import TextInput from "../../../app/common/form/TextInput";
 
-const LoginForm = ({ login, handleSubmit }) => {
+const LoginForm = ({ login, handleSubmit, error }) => {
    return (
       <Form
          autoComplete='off'
@@ -26,6 +26,11 @@ const LoginForm = ({ login, handleSubmit }) => {
                placeholder='password'
                type='password'
             />
+            {error && (
+               <Label basic color='red'>
+                  {error}
+               </Label>
+            )}
             <Button color='teal' fluid size='large'>
                Login
             </Button>
