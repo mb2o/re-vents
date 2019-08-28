@@ -1,7 +1,6 @@
 import { Button, Container, Menu } from "semantic-ui-react";
 import { Link, NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { logout } from "../../auth/authActions";
 import { openModal } from "../../modals/modalActions";
 import { withFirebase } from "react-redux-firebase";
 import React, { Component, Fragment } from "react";
@@ -72,8 +71,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-   openModal,
-   logout
+   openModal
 };
 
 export default withRouter(

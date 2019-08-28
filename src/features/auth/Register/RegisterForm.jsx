@@ -7,7 +7,7 @@ import TextInput from "../../../app/common/form/TextInput";
 const RegisterForm = () => {
    return (
       <div>
-         <Form size='large'>
+         <Form autoComplete='off' size='large'>
             <Segment>
                <Field
                   component={TextInput}
