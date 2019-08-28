@@ -13,7 +13,11 @@ const SocialLogin = ({ socialLogin }) => {
             <Icon name='facebook' /> Login with Facebook
          </Button>
 
-         <Button color='google plus' fluid type='button'>
+         <Button
+            color='google plus'
+            fluid
+            onClick={() => socialLogin("Google")}
+            type='button'>
             <Icon name='google plus' />
             Login with Google
          </Button>
