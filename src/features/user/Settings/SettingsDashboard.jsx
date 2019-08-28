@@ -53,19 +53,11 @@ const SettingsDashboard = ({
 // Component loads before our firebase auth data,
 // so wrap render() in firebaseAuthIsReady in index.js
 const mapStateToProps = (state) => ({
-<<<<<<< HEAD
    providerId: state.firebase.auth.providerData[0].providerId,
    user: state.firebase.profile
-=======
-   providerId: state.firebase.auth.providerData[0].providerId
->>>>>>> 915ff42888a8b84c03fbba45f2b3a57581118147
 });
 
 export default connect(
    mapStateToProps,
-<<<<<<< HEAD
    { updatePassword, updateProfile }
-=======
-   { updatePassword }
->>>>>>> 915ff42888a8b84c03fbba45f2b3a57581118147
 )(SettingsDashboard);
