@@ -44,5 +44,8 @@ export const registerUser = (user) => async (
       dispatch(closeModal());
    } catch (error) {
       console.error(error);
+      throw new SubmissionError({
+         _error: error.message
+      });
    }
 };
