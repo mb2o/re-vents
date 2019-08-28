@@ -1,9 +1,10 @@
-import { Button, Form, Label, Segment } from "semantic-ui-react";
+import { Button, Divider, Form, Label, Segment } from "semantic-ui-react";
 import { Field, reduxForm } from "redux-form";
 import { combineValidators, isRequired } from "revalidate";
 import { connect } from "react-redux";
 import { registerUser } from "../authActions";
 import React from "react";
+import SocialLogin from "../SocialLogin/SocialLogin";
 import TextInput from "../../../app/common/form/TextInput";
 
 const validate = combineValidators({
@@ -56,6 +57,8 @@ const RegisterForm = ({
                   size='large'>
                   Register
                </Button>
+               <Divider horizontal>Or</Divider>
+               <SocialLogin />
             </Segment>
          </Form>
       </div>
