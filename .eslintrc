@@ -22,7 +22,7 @@
       "no-extra-parens": 0,
       "no-irregular-whitespace": 0,
       "no-undef": 0,
-      "no-unused-vars": 1,
+      "no-unused-vars": 0,
       "semi": 1,
       "semi-spacing": 1,
       "valid-jsdoc": [2, { "requireReturn": false }],
