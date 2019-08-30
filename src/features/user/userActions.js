@@ -31,7 +31,7 @@ export const uploadProfileImage = (file, fileName) => async (
    const user = firebase.auth().currentUser;
    const path = `${user.uid}/user_images/`;
    const options = {
-      name: file
+      name: fileName
    };
 
    try {

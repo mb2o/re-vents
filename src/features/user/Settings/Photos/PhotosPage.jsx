@@ -1,20 +1,36 @@
-import {
-   Button,
-   Card,
-   Divider,
-   Grid,
-   Header,
-   Image,
-   Segment
-} from "semantic-ui-react";
+import { Button, Divider, Grid, Header, Segment } from "semantic-ui-react";
+import { compose } from "redux";
 import { connect } from "react-redux";
+import { firestoreConnect } from "react-redux-firebase";
+import { toastr } from "react-redux-toastr";
 import { uploadProfileImage } from "../../userActions";
 import CropperInput from "./CropperInput";
 import DropzoneInput from "./DropzoneInput";
-import React, { useEffect, useState, Fragment } from "react";
-import { toastr } from "react-redux-toastr";
+import React, { Fragment, useEffect, useState } from "react";
+import UserPhotos from "./UserPhotos";
 
-const PhotosPage = ({ uploadProfileImage }) => {
+const query = ({ auth }) => {
+   return [
+      {
+         collection: "users",
+         doc: auth.uid,
+         subcollections: [{ collection: "photos" }],
+         storeAs: "photos"
+      }
+   ];
+};
+
+const mapStateToProps = (state) => ({
+   auth: state.firebase.auth,
+   profile: state.firebase.profile,
+   photos: state.firestore.ordered.photos
+});
+
+const mapDispatchToProps = {
+   uploadProfileImage
+};
+
+const PhotosPage = ({ uploadProfileImage, photos, profile }) => {
    const [files, setFiles] = useState([]);
    const [image, setImage] = useState(null);
 
@@ -91,29 +107,16 @@ const PhotosPage = ({ uploadProfileImage }) => {
          </Grid>
 
          <Divider />
-         <Header color='teal' content='All Photos' sub />
 
-         <Card.Group itemsPerRow={5}>
-            <Card>
-               <Image src='https://randomuser.me/api/portraits/men/20.jpg' />
-               <Button positive>Main Photo</Button>
-            </Card>
-
-            <Card>
-               <Image src='https://randomuser.me/api/portraits/men/20.jpg' />
-               <div className='ui two buttons'>
-                  <Button basic color='green'>
-                     Main
-                  </Button>
-                  <Button basic color='red' icon='trash' />
-               </div>
-            </Card>
-         </Card.Group>
+         <UserPhotos photos={photos} profile={profile} />
       </Segment>
    );
 };
 
-export default connect(
-   null,
-   { uploadProfileImage }
+export default compose(
+   connect(
+      mapStateToProps,
+      mapDispatchToProps
+   ),
+   firestoreConnect((auth) => query(auth))
 )(PhotosPage);
