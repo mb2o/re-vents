@@ -27,7 +27,8 @@ const query = ({ auth }) => {
 const mapStateToProps = (state) => ({
    auth: state.firebase.auth,
    profile: state.firebase.profile,
-   photos: state.firestore.ordered.photos
+   photos: state.firestore.ordered.photos,
+   loading: state.async.loading
 });
 
 const mapDispatchToProps = {
@@ -37,11 +38,12 @@ const mapDispatchToProps = {
 };
 
 const PhotosPage = ({
-   uploadProfileImage,
+   deletePhoto,
+   loading,
    photos,
    profile,
-   deletePhoto,
-   setMainPhoto
+   setMainPhoto,
+   uploadProfileImage
 }) => {
    const [files, setFiles] = useState([]);
    const [image, setImage] = useState(null);
@@ -120,11 +122,13 @@ const PhotosPage = ({
                      <Button.Group>
                         <Button
                            icon='check'
+                           loading={loading}
                            onClick={handleUploadImage}
                            positive
                            style={{ width: "100px" }}
                         />
                         <Button
+                           disabled={loading}
                            icon='close'
                            onClick={handleCancelCrop}
                            style={{ width: "100px" }}

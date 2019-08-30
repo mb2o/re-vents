@@ -37,7 +37,7 @@ export const uploadProfileImage = (file, fileName) => async (
    };
 
    try {
-      dispatch(asyncActionStart);
+      dispatch(asyncActionStart());
       // upload file to firebase storage
       let uploadedFile = await firebase.uploadFile(path, file, null, options);
       // get url of the image
