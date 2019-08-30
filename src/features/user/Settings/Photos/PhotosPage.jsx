@@ -50,7 +50,8 @@ const PhotosPage = ({
 
    useEffect(() => {
       return () => {
-         files.forEach((file) => URL.revokeObjectURL(file.preview));
+         files.length > 0 &&
+            files.forEach((file) => URL.revokeObjectURL(file.preview));
       };
    }, [files]);
 
