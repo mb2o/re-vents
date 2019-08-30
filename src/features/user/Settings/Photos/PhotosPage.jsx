@@ -1,9 +1,9 @@
 import { Button, Divider, Grid, Header, Segment } from "semantic-ui-react";
 import { compose } from "redux";
 import { connect } from "react-redux";
+import { deletePhoto, uploadProfileImage } from "../../userActions";
 import { firestoreConnect } from "react-redux-firebase";
 import { toastr } from "react-redux-toastr";
-import { uploadProfileImage } from "../../userActions";
 import CropperInput from "./CropperInput";
 import DropzoneInput from "./DropzoneInput";
 import React, { Fragment, useEffect, useState } from "react";
@@ -27,10 +27,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-   uploadProfileImage
+   uploadProfileImage,
+   deletePhoto
 };
 
-const PhotosPage = ({ uploadProfileImage, photos, profile }) => {
+const PhotosPage = ({ uploadProfileImage, photos, profile, deletePhoto }) => {
    const [files, setFiles] = useState([]);
    const [image, setImage] = useState(null);
 
@@ -54,6 +55,14 @@ const PhotosPage = ({ uploadProfileImage, photos, profile }) => {
    const handleCancelCrop = () => {
       setFiles({});
       setImage(null);
+   };
+
+   const handleDeletePhoto = async (photo) => {
+      try {
+         await deletePhoto(photo);
+      } catch (error) {
+         toastr.error("Oops", error.message);
+      }
    };
 
    return (
@@ -108,7 +117,11 @@ const PhotosPage = ({ uploadProfileImage, photos, profile }) => {
 
          <Divider />
 
-         <UserPhotos photos={photos} profile={profile} />
+         <UserPhotos
+            deletePhoto={handleDeletePhoto}
+            photos={photos}
+            profile={profile}
+         />
       </Segment>
    );
 };
