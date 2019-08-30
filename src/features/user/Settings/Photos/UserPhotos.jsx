@@ -1,7 +1,7 @@
 import { Button, Card, Header, Image } from "semantic-ui-react";
 import React, { Fragment } from "react";
 
-const UserPhotos = ({ photos, profile, deletePhoto }) => {
+const UserPhotos = ({ photos, profile, deletePhoto, setMainPhoto }) => {
    let filteredPhotos;
 
    if (photos) {
@@ -25,7 +25,10 @@ const UserPhotos = ({ photos, profile, deletePhoto }) => {
                   <Card key={photo.id}>
                      <Image src={photo.url} />
                      <div className='ui two buttons'>
-                        <Button basic color='green'>
+                        <Button
+                           basic
+                           color='green'
+                           onClick={() => setMainPhoto(photo)}>
                            Main
                         </Button>
                         <Button

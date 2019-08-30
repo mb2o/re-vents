@@ -1,7 +1,11 @@
 import { Button, Divider, Grid, Header, Segment } from "semantic-ui-react";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { deletePhoto, uploadProfileImage } from "../../userActions";
+import {
+   deletePhoto,
+   setMainPhoto,
+   uploadProfileImage
+} from "../../userActions";
 import { firestoreConnect } from "react-redux-firebase";
 import { toastr } from "react-redux-toastr";
 import CropperInput from "./CropperInput";
@@ -28,10 +32,17 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
    uploadProfileImage,
-   deletePhoto
+   deletePhoto,
+   setMainPhoto
 };
 
-const PhotosPage = ({ uploadProfileImage, photos, profile, deletePhoto }) => {
+const PhotosPage = ({
+   uploadProfileImage,
+   photos,
+   profile,
+   deletePhoto,
+   setMainPhoto
+}) => {
    const [files, setFiles] = useState([]);
    const [image, setImage] = useState(null);
 
@@ -61,6 +72,15 @@ const PhotosPage = ({ uploadProfileImage, photos, profile, deletePhoto }) => {
       try {
          await deletePhoto(photo);
       } catch (error) {
+         toastr.error("Oops", error.message);
+      }
+   };
+
+   const handleSetMainPhoto = async (photo) => {
+      try {
+         await setMainPhoto(photo);
+      } catch (error) {
+         console.error(error);
          toastr.error("Oops", error.message);
       }
    };
@@ -121,6 +141,7 @@ const PhotosPage = ({ uploadProfileImage, photos, profile, deletePhoto }) => {
             deletePhoto={handleDeletePhoto}
             photos={photos}
             profile={profile}
+            setMainPhoto={handleSetMainPhoto}
          />
       </Segment>
    );
