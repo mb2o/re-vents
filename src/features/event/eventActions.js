@@ -32,6 +32,8 @@ export const createEvent = (event) => {
          });
 
          toastr.success("Success!", "Event has been created");
+
+         return createdEvent;
       } catch (error) {
          console.error(error);
          toastr.error("Oops", error.message);
