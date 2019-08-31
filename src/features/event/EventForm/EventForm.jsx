@@ -8,13 +8,11 @@ import {
    isRequired
 } from "revalidate";
 import { connect } from "react-redux";
-import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
-import React, { Component } from "react";
-import cuid from "cuid";
-
 import { createEvent, updateEvent } from "../eventActions";
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import DateInput from "../../../app/common/form/DateInput";
 import PlaceInput from "../../../app/common/form/PlaceInput";
+import React, { Component } from "react";
 import SelectInput from "../../../app/common/form/SelectInput";
 import TextArea from "../../../app/common/form/TextArea";
 import TextInput from "../../../app/common/form/TextInput";
