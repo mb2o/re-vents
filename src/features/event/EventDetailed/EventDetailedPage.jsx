@@ -1,11 +1,10 @@
-import React from "react";
 import { Grid } from "semantic-ui-react";
 import { connect } from "react-redux";
-
+import EventDetailedChat from "./EventDetailedChat";
 import EventDetailedHeader from "./EventDetailedHeader";
 import EventDetailedInfo from "./EventDetailedInfo";
-import EventDetailedChat from "./EventDetailedChat";
 import EventDetailedSidebar from "./EventDetailedSidebar";
+import React from "react";
 
 const EventDetailedPage = ({ event }) => {
    return (
