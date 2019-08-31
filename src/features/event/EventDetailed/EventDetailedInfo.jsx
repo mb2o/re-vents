@@ -1,5 +1,5 @@
 import { Button, Grid, Icon, Segment } from "semantic-ui-react";
-import { format, parseISO } from "date-fns";
+import { format } from "date-fns";
 import EventDetailedMap from "./EventDetailedMap";
 import React, { useState } from "react";
 
@@ -26,8 +26,8 @@ const EventDetailedInfo = ({ event }) => {
                <Grid.Column width={15}>
                   {event.date && (
                      <span>
-                        {format(parseISO(event.date), "EEEE do LLL")} at{" "}
-                        {format(parseISO(event.date), "h:mm a")}
+                        {format(event.date.toDate(), "EEEE do LLL")} at{" "}
+                        {format(event.date.toDate(), "h:mm a")}
                      </span>
                   )}
                </Grid.Column>
