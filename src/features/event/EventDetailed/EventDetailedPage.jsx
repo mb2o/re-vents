@@ -1,5 +1,6 @@
 import { Grid } from "semantic-ui-react";
 import { connect } from "react-redux";
+import { toastr } from "react-redux-toastr";
 import { withFirestore } from "react-redux-firebase";
 import EventDetailedChat from "./EventDetailedChat";
 import EventDetailedHeader from "./EventDetailedHeader";
@@ -11,8 +12,14 @@ const mapStateToProps = (state, ownProps) => {
    const eventId = ownProps.match.params.id;
 
    let event = {};
-   if (eventId && state.events.length > 0) {
-      event = state.events.filter((event) => event.id === eventId)[0];
+
+   if (
+      state.firestore.ordered.events &&
+      state.firestore.ordered.events.length > 0
+   ) {
+      event = state.firestore.ordered.events.filter(
+         (event) => event.id === eventId
+      )[0];
    }
 
    return { event };
@@ -20,8 +27,12 @@ const mapStateToProps = (state, ownProps) => {
 
 class EventDetailedPage extends Component {
    async componentDidMount() {
-      const { firestore, match } = this.props;
+      const { firestore, match, history } = this.props;
       let event = await firestore.get(`events/${match.params.id}`);
+      if (!event.exists) {
+         history.push("/events");
+         toastr.error("Sorry", "Event not found");
+      }
    }
 
    render() {
