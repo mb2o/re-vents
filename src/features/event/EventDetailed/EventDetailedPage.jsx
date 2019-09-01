@@ -1,9 +1,7 @@
 import { Grid } from "semantic-ui-react";
-import { auth } from "firebase";
+import { cancelGoingToEvent, goingToEvent } from "../../user/userActions";
 import { connect } from "react-redux";
-import { goingToEvent } from "../../user/userActions";
 import { objectToArray } from "../../../app/common/util/helpers";
-import { toastr } from "react-redux-toastr";
 import { withFirestore } from "react-redux-firebase";
 import EventDetailedChat from "./EventDetailedChat";
 import EventDetailedHeader from "./EventDetailedHeader";
@@ -30,7 +28,8 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = {
-   goingToEvent
+   goingToEvent,
+   cancelGoingToEvent
 };
 
 class EventDetailedPage extends Component {
@@ -45,7 +44,7 @@ class EventDetailedPage extends Component {
    }
 
    render() {
-      const { event, auth, goingToEvent } = this.props;
+      const { event, auth, goingToEvent, cancelGoingToEvent } = this.props;
       const attendees =
          event && event.attendees && objectToArray(event.attendees);
       const isHost = event.hostUid === auth.uid;
@@ -55,6 +54,7 @@ class EventDetailedPage extends Component {
          <Grid>
             <Grid.Column width={10}>
                <EventDetailedHeader
+                  cancelGoingToEvent={cancelGoingToEvent}
                   event={event}
                   goingToEvent={goingToEvent}
                   isGoing={isGoing}

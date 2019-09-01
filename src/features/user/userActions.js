@@ -5,6 +5,7 @@ import {
 } from "../async/asyncActions";
 import { toastr } from "react-redux-toastr";
 import cuid from "cuid";
+import { async } from "q";
 
 export const updateProfile = (user) => async (
    dispatch,
@@ -141,6 +142,27 @@ export const goingToEvent = (event) => async (
       toastr.success("Success", "You have signed up to this event");
    } catch (error) {
       console.error(error);
-      toastr.error("Oops", "Problem wigning up to this event");
+      toastr.error("Oops", "Problem signing up to this event");
+   }
+};
+
+export const cancelGoingToEvent = (event) => async (
+   dispatch,
+   getState,
+   { getFirestore, getFirebase }
+) => {
+   const firebase = getFirebase();
+   const firestore = getFirestore();
+   const user = firebase.auth().currentUser;
+
+   try {
+      await firestore.update(`events/${event.id}`, {
+         [`attendees.${user.uid}`]: firestore.FieldValue.delete()
+      });
+      await firestore.delete(`event_attendee/${event.id}_{user.uid}`);
+      toastr.success("Success", "You have removed yourself from this event");
+   } catch (error) {
+      console.error(error);
+      toastr.error("Oops", "Something went wrong");
    }
 };
