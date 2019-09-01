@@ -1,4 +1,5 @@
 import { Grid, Header, Image, Segment } from "semantic-ui-react";
+import LazyLoad from "react-lazyload";
 import React from "react";
 
 const UserDetailedPhotos = ({ photos }) => {
@@ -9,7 +10,12 @@ const UserDetailedPhotos = ({ photos }) => {
             <Image.Group size='small'>
                {photos &&
                   photos.map((photo) => (
-                     <Image key={photo.id} src={photo.url} />
+                     <LazyLoad
+                        height={150}
+                        key={photo.id}
+                        placeholder={<Image src='/assets/user.png' />}>
+                        <Image src={photo.url} />
+                     </LazyLoad>
                   ))}
             </Image.Group>
          </Segment>
