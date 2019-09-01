@@ -10,7 +10,6 @@ import {
 } from "revalidate";
 import { connect } from "react-redux";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
-import { toastr } from "react-redux-toastr";
 import { withFirestore } from "react-redux-firebase";
 import DateInput from "../../../app/common/form/DateInput";
 import PlaceInput from "../../../app/common/form/PlaceInput";
@@ -76,17 +75,8 @@ class EventForm extends Component {
    };
 
    async componentDidMount() {
-      const { firestore, match, history } = this.props;
-
-      let event = await firestore.get(`events/${match.params.id}`);
-      if (!event.exists) {
-         history.push("/events");
-         toastr.error("Sorry", "Event not found");
-      } else {
-         this.setState({
-            venueLatLng: event.data().venueLatLng
-         });
-      }
+      const { firestore, match } = this.props;
+      await firestore.setListener(`events/${match.params.id}`);
    }
 
    onFormSubmit = async (values) => {
@@ -94,6 +84,9 @@ class EventForm extends Component {
 
       try {
          if (this.props.initialValues.id) {
+            if (Object.keys(values.venueLatLng).length === 0) {
+               values.venueLatLng = this.props.event.venueLatLng;
+            }
             this.props.updateEvent(values);
             this.props.history.push(`/events/${this.props.initialValues.id}`);
          } else {

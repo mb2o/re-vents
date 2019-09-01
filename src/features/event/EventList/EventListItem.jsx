@@ -1,13 +1,12 @@
-import React, { Component } from "react";
+import { Button, Icon, Item, Label, List, Segment } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import { Segment, Item, Icon, List, Button } from "semantic-ui-react";
-
-import EventListAttendee from "./EventListAttendee";
 import { format } from "date-fns";
+import EventListAttendee from "./EventListAttendee";
+import React, { Component } from "react";
 
 class EventListItem extends Component {
    render() {
-      const { event, deleteEvent } = this.props;
+      const { event } = this.props;
 
       return (
          <Segment.Group>
@@ -20,10 +19,23 @@ class EventListItem extends Component {
                         src={event.hostPhotoURL}
                      />
                      <Item.Content>
-                        <Item.Header>{event.title}</Item.Header>
+                        <Item.Header as={Link} to={`/events/${event.id}`}>
+                           {event.title}
+                        </Item.Header>
                         <Item.Description>
-                           Hosted by {event.hostedBy}
+                           Hosted by{" "}
+                           <Link to={`/profile/${event.hostUid}`}>
+                              {event.hostedBy}
+                           </Link>{" "}
                         </Item.Description>
+                        {event.cancelled && (
+                           <Label
+                              color='red'
+                              content='Event cancelled'
+                              ribbon='right'
+                              style={{ top: "-40px" }}
+                           />
+                        )}
                      </Item.Content>
                   </Item>
                </Item.Group>
@@ -42,7 +54,7 @@ class EventListItem extends Component {
                <List horizontal>
                   {event.attendees &&
                      Object.values(event.attendees).map((attendee, index) => (
-                        <EventListAttendee key={index} attendee={attendee} />
+                        <EventListAttendee attendee={attendee} key={index} />
                      ))}
                </List>
             </Segment>
@@ -50,18 +62,11 @@ class EventListItem extends Component {
             <Segment clearing>
                <span>{event.description}</span>
                <Button
-                  as='a'
-                  color='red'
-                  floated='right'
-                  content='Delete'
-                  onClick={() => deleteEvent(event.id)}
-               />
-               <Button
                   as={Link}
-                  to={`/events/${event.id}`}
                   color='teal'
-                  floated='right'
                   content='View'
+                  floated='right'
+                  to={`/events/${event.id}`}
                />
             </Segment>
          </Segment.Group>
