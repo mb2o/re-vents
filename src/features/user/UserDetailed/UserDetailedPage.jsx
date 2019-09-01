@@ -3,6 +3,7 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect, isEmpty } from "react-redux-firebase";
 import { userDetailedQuery } from "../userQueries";
+import LoadingIndicator from "../../../app/layout/LoadingIndicator";
 import React, { Component } from "react";
 import UserDetailedDescription from "./UserDetailedDescription";
 import UserDetailedEvents from "./UserDetailedEvents";
@@ -27,14 +28,18 @@ const mapStateToProps = (state, ownProps) => {
       profile,
       userUid,
       auth: state.firebase.auth,
-      photos: state.firestore.ordered.photos
+      photos: state.firestore.ordered.photos,
+      requesting: state.firestore.status.requesting
    };
 };
 
 class UserDetailedPage extends Component {
    render() {
-      const { profile, photos, auth, match } = this.props;
+      const { profile, photos, auth, match, requesting } = this.props;
       const isCurrentUser = auth.uid === match.params.id;
+      const loading = Object.values(requesting).some((a) => a === true);
+
+      if (loading) return <LoadingIndicator />;
 
       return (
          <Grid>
