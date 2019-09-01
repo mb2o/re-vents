@@ -5,7 +5,6 @@ import {
 } from "../async/asyncActions";
 import { toastr } from "react-redux-toastr";
 import cuid from "cuid";
-import { async } from "q";
 
 export const updateProfile = (user) => async (
    dispatch,
