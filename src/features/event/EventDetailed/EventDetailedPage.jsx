@@ -1,4 +1,5 @@
 import { Grid } from "semantic-ui-react";
+import { auth } from "firebase";
 import { connect } from "react-redux";
 import { objectToArray } from "../../../app/common/util/helpers";
 import { toastr } from "react-redux-toastr";
@@ -24,7 +25,7 @@ const mapStateToProps = (state, ownProps) => {
          )[0] || {};
    }
 
-   return { event };
+   return { event, auth: state.firebase.auth };
 };
 
 class EventDetailedPage extends Component {
@@ -38,14 +39,20 @@ class EventDetailedPage extends Component {
    }
 
    render() {
-      const { event } = this.props;
+      const { event, auth } = this.props;
       const attendees =
          event && event.attendees && objectToArray(event.attendees);
+      const isHost = event.hostUid === auth.uid;
+      const isGoing = attendees && attendees.some((a) => a.id === auth.uid);
 
       return (
          <Grid>
             <Grid.Column width={10}>
-               <EventDetailedHeader event={event} />
+               <EventDetailedHeader
+                  event={event}
+                  isGoing={isGoing}
+                  isHost={isHost}
+               />
                <EventDetailedInfo event={event} />
                <EventDetailedChat />
             </Grid.Column>
