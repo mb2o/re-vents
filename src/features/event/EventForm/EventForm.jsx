@@ -10,12 +10,39 @@ import {
 import { connect } from "react-redux";
 import { createEvent, updateEvent } from "../eventActions";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+import { toastr } from "react-redux-toastr";
+import { withFirestore } from "react-redux-firebase";
 import DateInput from "../../../app/common/form/DateInput";
 import PlaceInput from "../../../app/common/form/PlaceInput";
 import React, { Component } from "react";
 import SelectInput from "../../../app/common/form/SelectInput";
 import TextArea from "../../../app/common/form/TextArea";
 import TextInput from "../../../app/common/form/TextInput";
+
+const mapStateToProps = (state, ownProps) => {
+   const eventId = ownProps.match.params.id;
+
+   let event = {};
+
+   if (
+      state.firestore.ordered.events &&
+      state.firestore.ordered.events.length > 0
+   ) {
+      event =
+         state.firestore.ordered.events.filter(
+            (event) => event.id === eventId
+         )[0] || {};
+   }
+
+   return {
+      initialValues: event
+   };
+};
+
+const mapDispatchToProps = {
+   createEvent,
+   updateEvent
+};
 
 const validate = combineValidators({
    title: isRequired({ message: "The event title is required" }),
@@ -46,12 +73,26 @@ class EventForm extends Component {
       venueLatLng: {}
    };
 
+   async componentDidMount() {
+      const { firestore, match, history } = this.props;
+
+      let event = await firestore.get(`events/${match.params.id}`);
+      if (!event.exists) {
+         history.push("/events");
+         toastr.error("Sorry", "Event not found");
+      } else {
+         this.setState({
+            venueLatLng: event.data().venueLatLng
+         });
+      }
+   }
+
    onFormSubmit = async (values) => {
       values.venueLatLng = this.state.venueLatLng;
 
       try {
          if (this.props.initialValues.id) {
-            this.props.updateEvent(this.state);
+            this.props.updateEvent(values);
             this.props.history.push(`/events/${this.props.initialValues.id}`);
          } else {
             let createdEvent = await this.props.createEvent(values);
@@ -101,45 +142,46 @@ class EventForm extends Component {
          <Grid>
             <Grid.Column width={10}>
                <Segment>
-                  <Header sub color='teal' content='Event Details' />
+                  <Header color='teal' content='Event Details' sub />
 
                   <Form
-                     onSubmit={this.props.handleSubmit(this.onFormSubmit)}
-                     autoComplete='off'>
+                     autoComplete='off'
+                     onSubmit={this.props.handleSubmit(this.onFormSubmit)}>
                      <Field
-                        name='title'
                         component={TextInput}
+                        name='title'
                         placeholder='Give your event a name'
                      />
                      <Field
-                        name='category'
                         component={SelectInput}
+                        name='category'
                         options={category}
                         placeholder='What is yout event about?'
                      />
                      <Field
-                        name='description'
                         component={TextArea}
-                        rows='3'
+                        name='description'
                         placeholder='Tell us more about your event'
+                        rows='3'
                      />
 
                      <Header
-                        sub
                         color='teal'
                         content='Event Location Details'
+                        sub
                      />
 
                      <Field
-                        name='city'
                         component={PlaceInput}
-                        options={{ types: ["(cities)"] }}
+                        name='city'
                         onSelect={this.handleCitySelect}
+                        options={{ types: ["(cities)"] }}
                         placeholder='Where will your event take place?'
                      />
                      <Field
-                        name='venue'
                         component={PlaceInput}
+                        name='venue'
+                        onSelect={this.handleVenueSelect}
                         options={{
                            location: new google.maps.LatLng(
                               this.state.cityLatLng
@@ -147,32 +189,31 @@ class EventForm extends Component {
                            radius: 1000,
                            types: ["establishment"]
                         }}
-                        onSelect={this.handleVenueSelect}
                         placeholder='Event venue'
                      />
                      <Field
-                        name='date'
                         component={DateInput}
-                        placeholder='When will your event take place?'
                         dateFormat='dd LLL yyyy h:mm a'
+                        name='date'
+                        placeholder='When will your event take place?'
                         showTimeSelect
                         timeFormat='HH:mm'
                      />
 
                      <Button
+                        disabled={invalid || submitting || pristine}
                         positive
-                        type='submit'
-                        disabled={invalid || submitting || pristine}>
+                        type='submit'>
                         Submit
                      </Button>
                      <Button
-                        type='button'
                         onClick={
                            initialValues.id
                               ? () =>
                                    history.push(`/events/${initialValues.id}`)
                               : () => history.push("/events")
-                        }>
+                        }
+                        type='button'>
                         Cancel
                      </Button>
                   </Form>
@@ -183,26 +224,13 @@ class EventForm extends Component {
    }
 }
 
-const mapStateToProps = (state, ownProps) => {
-   const eventId = ownProps.match.params.id;
-
-   let event = {};
-
-   if (eventId && state.events.length > 0) {
-      event = state.events.filter((event) => event.id === eventId)[0];
-   }
-
-   return {
-      initialValues: event
-   };
-};
-
-const mapDispatchToProps = {
-   createEvent,
-   updateEvent
-};
-
-export default connect(
-   mapStateToProps,
-   mapDispatchToProps
-)(reduxForm({ form: "eventForm", validate })(EventForm));
+export default withFirestore(
+   connect(
+      mapStateToProps,
+      mapDispatchToProps
+   )(
+      reduxForm({ form: "eventForm", validate, enableReinitialize: true })(
+         EventForm
+      )
+   )
+);
