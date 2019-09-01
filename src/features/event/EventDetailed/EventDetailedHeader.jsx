@@ -46,7 +46,14 @@ const EventDetailedHeader = ({
                               format(event.date.toDate(), "EEEE do LLLL")}
                         </p>
                         <p>
-                           Hosted by <strong>{event.hostedBy}</strong>
+                           Hosted by{" "}
+                           <strong>
+                              <Link
+                                 style={{ color: "white" }}
+                                 to={`/profile/${event.hostUid}`}>
+                                 {event.hostedBy}
+                              </Link>
+                           </strong>
                         </p>
                      </Item.Content>
                   </Item>

@@ -1,6 +1,7 @@
 import { Button, Icon, Item, Label, List, Segment } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
+import { objectToArray } from "../../../app/common/util/helpers";
 import EventListAttendee from "./EventListAttendee";
 import React, { Component } from "react";
 
@@ -26,7 +27,7 @@ class EventListItem extends Component {
                            Hosted by{" "}
                            <Link to={`/profile/${event.hostUid}`}>
                               {event.hostedBy}
-                           </Link>{" "}
+                           </Link>
                         </Item.Description>
                         {event.cancelled && (
                            <Label
@@ -53,8 +54,11 @@ class EventListItem extends Component {
             <Segment secondary>
                <List horizontal>
                   {event.attendees &&
-                     Object.values(event.attendees).map((attendee, index) => (
-                        <EventListAttendee attendee={attendee} key={index} />
+                     objectToArray(event.attendees).map((attendee) => (
+                        <EventListAttendee
+                           attendee={attendee}
+                           key={attendee.id}
+                        />
                      ))}
                </List>
             </Segment>

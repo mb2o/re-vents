@@ -1,5 +1,6 @@
+import { Image, List } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 import React, { Component } from "react";
-import { List, Image } from "semantic-ui-react";
 
 class EventListAttendee extends Component {
    render() {
@@ -7,7 +8,13 @@ class EventListAttendee extends Component {
 
       return (
          <List.Item>
-            <Image as='a' size='mini' circular src={attendee.photoURL} />
+            <Image
+               as={Link}
+               circular
+               size='mini'
+               src={attendee.photoURL}
+               to={`/profile/${attendee.id}`}
+            />
          </List.Item>
       );
    }
