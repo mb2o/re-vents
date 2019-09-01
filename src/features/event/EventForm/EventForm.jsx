@@ -1,6 +1,7 @@
 /* global google */
 import { Button, Form, Grid, Header, Segment } from "semantic-ui-react";
 import { Field, reduxForm } from "redux-form";
+import { cancelEventToggle, createEvent, updateEvent } from "../eventActions";
 import {
    combineValidators,
    composeValidators,
@@ -8,7 +9,6 @@ import {
    isRequired
 } from "revalidate";
 import { connect } from "react-redux";
-import { createEvent, updateEvent } from "../eventActions";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import { toastr } from "react-redux-toastr";
 import { withFirestore } from "react-redux-firebase";
@@ -35,13 +35,15 @@ const mapStateToProps = (state, ownProps) => {
    }
 
    return {
-      initialValues: event
+      initialValues: event,
+      event
    };
 };
 
 const mapDispatchToProps = {
    createEvent,
-   updateEvent
+   updateEvent,
+   cancelEventToggle
 };
 
 const validate = combineValidators({
@@ -135,7 +137,9 @@ class EventForm extends Component {
          initialValues,
          invalid,
          submitting,
-         pristine
+         pristine,
+         event,
+         cancelEventToggle
       } = this.props;
 
       return (
@@ -216,6 +220,17 @@ class EventForm extends Component {
                         type='button'>
                         Cancel
                      </Button>
+                     <Button
+                        color={event.cancelled ? "green" : "red"}
+                        content={
+                           event.cancelled ? "Reactivate event" : "Cancel event"
+                        }
+                        floated='right'
+                        onClick={() =>
+                           cancelEventToggle(!event.cancelled, event.id)
+                        }
+                        type='button'
+                     />
                   </Form>
                </Segment>
             </Grid.Column>

@@ -7,6 +7,7 @@ import {
 import { createNewEvent } from "../../app/common/util/helpers";
 import { fetchSampleData } from "../../app/data/mockApi";
 import { toastr } from "react-redux-toastr";
+import { async } from "q";
 
 export const createEvent = (event) => {
    return async (dispatch, getState, { getFirestore, getFirebase }) => {
@@ -47,6 +48,22 @@ export const updateEvent = (event) => {
          toastr.error("Oops", error.message);
       }
    };
+};
+
+export const cancelEventToggle = (cancelled, eventId) => async (
+   dispatch,
+   getState,
+   { getFirestore }
+) => {
+   const firestore = getFirestore();
+
+   try {
+      await firestore.update(`events/${eventId}`, {
+         cancelled: cancelled
+      });
+   } catch (error) {
+      console.error(error);
+   }
 };
 
 export const deleteEvent = (eventId) => {
