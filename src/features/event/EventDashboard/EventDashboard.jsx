@@ -1,4 +1,4 @@
-import { Grid } from "semantic-ui-react";
+import { Button, Grid } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { getEventsForDashboard } from "../eventActions";
@@ -17,9 +17,33 @@ const mapDispatchToProps = {
 };
 
 class EventDashboard extends Component {
-   componentDidMount() {
-      this.props.getEventsForDashboard();
+   state = {
+      moreEvents: false
+   };
+
+   async componentDidMount() {
+      let next = await this.props.getEventsForDashboard();
+      console.log(next);
+
+      if (next && next.docs && next.docs.length > 1) {
+         this.setState({
+            moreEvents: true
+         });
+      }
    }
+
+   getNextEvents = async () => {
+      const { events } = this.props;
+      let lastEvent = events && events[events.length - 1];
+      console.log(lastEvent);
+      let next = await this.props.getEventsForDashboard(lastEvent);
+      console.log(next);
+      if (next && next.docs && next.docs.length <= 1) {
+         this.setState({
+            moreEvents: false
+         });
+      }
+   };
 
    render() {
       const { events, loading } = this.props;
@@ -30,6 +54,13 @@ class EventDashboard extends Component {
          <Grid>
             <Grid.Column width={10}>
                <EventList events={events} />
+               <Button
+                  color='green'
+                  content='More...'
+                  disabled={!this.state.moreEvents}
+                  floated='right'
+                  onClick={this.getNextEvents}
+               />
             </Grid.Column>
             <Grid.Column width={6}>
                <EventActivity />
