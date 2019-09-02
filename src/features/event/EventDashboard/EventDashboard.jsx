@@ -1,4 +1,4 @@
-import { Button, Grid } from "semantic-ui-react";
+import { Button, Grid, Loader } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { getEventsForDashboard } from "../eventActions";
@@ -57,24 +57,25 @@ class EventDashboard extends Component {
 
    render() {
       const { loading } = this.props;
+      const { moreEvents, loadedEvents } = this.state;
 
       if (this.state.loadingInitial) return <LoadingIndicator />;
 
       return (
          <Grid>
             <Grid.Column width={10}>
-               <EventList events={this.state.loadedEvents} />
-               <Button
-                  color='green'
-                  content='More...'
-                  disabled={!this.state.moreEvents}
-                  floated='right'
+               <EventList
+                  events={loadedEvents}
+                  getNextEvents={this.getNextEvents}
                   loading={loading}
-                  onClick={this.getNextEvents}
+                  moreEvents={moreEvents}
                />
             </Grid.Column>
             <Grid.Column width={6}>
                <EventActivity />
+            </Grid.Column>
+            <Grid.Column width={10}>
+              <Loader active={loading} />
             </Grid.Column>
          </Grid>
       );
