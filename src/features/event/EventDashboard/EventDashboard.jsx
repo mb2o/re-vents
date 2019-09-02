@@ -1,26 +1,30 @@
 import { Grid } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { createEvent, updateEvent } from "../eventActions";
-import { firestoreConnect, isLoaded } from "react-redux-firebase";
+import { firestoreConnect } from "react-redux-firebase";
+import { getEventsForDashboard } from "../eventActions";
 import EventActivity from "../EventActivity/EventActivity";
 import EventList from "../EventList/EventList";
 import LoadingIndicator from "../../../app/layout/LoadingIndicator";
 import React, { Component } from "react";
 
 const mapStateToProps = (state) => ({
-   events: state.firestore.ordered.events
+   events: state.events,
+   loading: state.async.loading
 });
 
 const mapDispatchToProps = {
-   createEvent,
-   updateEvent
+   getEventsForDashboard
 };
 
 class EventDashboard extends Component {
-   render() {
-      const { events } = this.props;
+   componentDidMount() {
+      this.props.getEventsForDashboard();
+   }
 
-      if (!isLoaded) return <LoadingIndicator />;
+   render() {
+      const { events, loading } = this.props;
+
+      if (loading) return <LoadingIndicator />;
 
       return (
          <Grid>
