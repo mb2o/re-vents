@@ -18,26 +18,36 @@ const mapDispatchToProps = {
 
 class EventDashboard extends Component {
    state = {
-      moreEvents: false
+      moreEvents: false,
+      loadingInitial: true,
+      loadedEvents: []
    };
 
    async componentDidMount() {
       let next = await this.props.getEventsForDashboard();
-      console.log(next);
 
       if (next && next.docs && next.docs.length > 1) {
          this.setState({
-            moreEvents: true
+            moreEvents: true,
+            loadingInitial: false
+         });
+      }
+   }
+
+   componentDidUpdate(prevProps, prevState) {
+      if (this.props.events !== prevProps.events) {
+         this.setState({
+            loadedEvents: [...this.state.loadedEvents, ...this.props.events]
          });
       }
    }
 
    getNextEvents = async () => {
       const { events } = this.props;
+
       let lastEvent = events && events[events.length - 1];
-      console.log(lastEvent);
       let next = await this.props.getEventsForDashboard(lastEvent);
-      console.log(next);
+
       if (next && next.docs && next.docs.length <= 1) {
          this.setState({
             moreEvents: false
@@ -46,19 +56,20 @@ class EventDashboard extends Component {
    };
 
    render() {
-      const { events, loading } = this.props;
+      const { loading } = this.props;
 
-      if (loading) return <LoadingIndicator />;
+      if (this.state.loadingInitial) return <LoadingIndicator />;
 
       return (
          <Grid>
             <Grid.Column width={10}>
-               <EventList events={events} />
+               <EventList events={this.state.loadedEvents} />
                <Button
                   color='green'
                   content='More...'
                   disabled={!this.state.moreEvents}
                   floated='right'
+                  loading={loading}
                   onClick={this.getNextEvents}
                />
             </Grid.Column>
