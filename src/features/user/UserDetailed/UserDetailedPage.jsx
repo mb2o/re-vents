@@ -2,6 +2,7 @@ import { Grid } from "semantic-ui-react";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect, isEmpty } from "react-redux-firebase";
+import { getUserEvents } from "../userActions";
 import { userDetailedQuery } from "../userQueries";
 import LoadingIndicator from "../../../app/layout/LoadingIndicator";
 import React, { Component } from "react";
@@ -33,7 +34,18 @@ const mapStateToProps = (state, ownProps) => {
    };
 };
 
+const mapDispatchToProps = {
+   getUserEvents
+};
+
 class UserDetailedPage extends Component {
+   async componentDidMount() {
+      const { getUserEvents, userUid } = this.props;
+      let events = await getUserEvents(userUid, 3);
+
+      console.log(events);
+   }
+
    render() {
       const { profile, photos, auth, match, requesting } = this.props;
       const isCurrentUser = auth.uid === match.params.id;
@@ -56,6 +68,9 @@ class UserDetailedPage extends Component {
 }
 
 export default compose(
-   connect(mapStateToProps),
+   connect(
+      mapStateToProps,
+      mapDispatchToProps
+   ),
    firestoreConnect((auth, userUid) => userDetailedQuery(auth, userUid))
 )(UserDetailedPage);

@@ -190,12 +190,14 @@ export const getUserEvents = (userUid, activeTab) => async (
             .where("userUid", "==", userUid)
             .where("eventDate", ">=", today)
             .orderBy("eventDate");
+         break;
 
       case 3: // hosted events
          query = eventsRef
             .where("userUid", "==", userUid)
             .where("host", "==", true)
             .orderBy("eventDate", "desc");
+         break;
 
       default:
          query = eventsRef
