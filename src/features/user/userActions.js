@@ -1,3 +1,4 @@
+import { FETCH_EVENTS } from "../event/eventConstants";
 import {
    asyncActionError,
    asyncActionFinish,
@@ -172,6 +173,7 @@ export const getUserEvents = (userUid, activeTab) => async (
    getState
 ) => {
    dispatch(asyncActionStart());
+
    const firestore = firebase.firestore();
    const today = new Date(Date.now());
    let eventsRef = firestore.collection("event_attendee");
@@ -207,8 +209,20 @@ export const getUserEvents = (userUid, activeTab) => async (
 
    try {
       let querySnap = await query.get();
-      console.log(querySnap);
+      let events = [];
 
+      for (let i = 0; i < querySnap.docs.length; i++) {
+         const evt = await firestore
+            .collection("events")
+            .doc(
+               querySnap.docs[i].data().eventId
+            )
+            .get();
+
+         events.push({ ...evt.data(), id: evt.id });
+      }
+
+      dispatch({ type: FETCH_EVENTS, payload: { events } });
       dispatch(asyncActionFinish());
    } catch (error) {
       console.error(error);

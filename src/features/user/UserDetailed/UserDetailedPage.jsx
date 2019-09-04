@@ -41,9 +41,7 @@ const mapDispatchToProps = {
 class UserDetailedPage extends Component {
    async componentDidMount() {
       const { getUserEvents, userUid } = this.props;
-      let events = await getUserEvents(userUid, 3);
-
-      console.log(events);
+      let events = await getUserEvents(userUid);
    }
 
    render() {
