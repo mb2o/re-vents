@@ -1,4 +1,4 @@
-import { Button, Grid, Loader } from "semantic-ui-react";
+import { Grid, Loader } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { getEventsForDashboard } from "../eventActions";

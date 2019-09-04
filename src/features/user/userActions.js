@@ -5,6 +5,7 @@ import {
 } from "../async/asyncActions";
 import { toastr } from "react-redux-toastr";
 import cuid from "cuid";
+import firebase from "../../app/config/firebase";
 
 export const updateProfile = (user) => async (
    dispatch,
@@ -163,5 +164,52 @@ export const cancelGoingToEvent = (event) => async (
    } catch (error) {
       console.error(error);
       toastr.error("Oops", "Something went wrong");
+   }
+};
+
+export const getUserEvents = (userUid, activeTab) => async (
+   dispatch,
+   getState
+) => {
+   dispatch(asyncActionStart());
+   const firestore = firebase.firestore();
+   const today = new Date(Date.now());
+   let eventsRef = firestore.collection("event_attendee");
+   let query;
+
+   switch (activeTab) {
+      case 1: // past events
+         query = eventsRef
+            .where("userUid", "==", userUid)
+            .where("eventDate", "<=", today)
+            .orderBy("eventDate", "desc");
+         break;
+
+      case 2: // future events
+         query = eventsRef
+            .where("userUid", "==", userUid)
+            .where("eventDate", ">=", today)
+            .orderBy("eventDate");
+
+      case 3: // hosted events
+         query = eventsRef
+            .where("userUid", "==", userUid)
+            .where("host", "==", true)
+            .orderBy("eventDate", "desc");
+
+      default:
+         query = eventsRef
+            .where("userUid", "==", userUid)
+            .orderBy("eventDate", "desc");
+   }
+
+   try {
+      let querySnap = await query.get();
+      console.log(querySnap);
+
+      dispatch(asyncActionFinish());
+   } catch (error) {
+      console.error(error);
+      dispatch(asyncActionError());
    }
 };
