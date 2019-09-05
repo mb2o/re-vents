@@ -59,7 +59,8 @@ class EventDashboard extends Component {
       const { loading } = this.props;
       const { moreEvents, loadedEvents } = this.state;
 
-      if (this.state.loadingInitial) return <LoadingIndicator />;
+      if (loadedEvents.length > 0 && this.state.loadingInitial)
+         return <LoadingIndicator />;
 
       return (
          <Grid>
@@ -75,7 +76,7 @@ class EventDashboard extends Component {
                <EventActivity />
             </Grid.Column>
             <Grid.Column width={10}>
-              <Loader active={loading} />
+               <Loader active={loading} />
             </Grid.Column>
          </Grid>
       );

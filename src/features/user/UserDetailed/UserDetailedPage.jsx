@@ -44,7 +44,12 @@ class UserDetailedPage extends Component {
    async componentDidMount() {
       const { getUserEvents, userUid } = this.props;
       let events = await getUserEvents(userUid);
+      console.log(events);
    }
+
+   changeTab = (e, data) => {
+      this.props.getUserEvents(this.props.userUid, data.activeIndex);
+   };
 
    render() {
       const {
@@ -69,7 +74,11 @@ class UserDetailedPage extends Component {
             {photos && photos.length > 0 && (
                <UserDetailedPhotos photos={photos} />
             )}
-            <UserDetailedEvents events={events} eventsLoading={eventsLoading} />
+            <UserDetailedEvents
+               changeTab={this.changeTab}
+               events={events}
+               eventsLoading={eventsLoading}
+            />
          </Grid>
       );
    }

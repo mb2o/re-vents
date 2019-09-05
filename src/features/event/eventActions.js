@@ -20,7 +20,7 @@ export const createEvent = (event) => {
          let createdEvent = await firestore.add("events", newEvent); // use ADD() when you do not have any ID
 
          await firestore.set(`event_attendee/${createdEvent.id}_${user.uid}`, {
-            eventId: createdEvent,
+            eventId: createdEvent.id,
             userUid: user.uid,
             eventDate: event.date,
             host: true
@@ -75,7 +75,7 @@ export const getEventsForDashboard = (lastEvent) => async (
    dispatch,
    getState
 ) => {
-   let today = new Date();
+   // let today = new Date();
    const firestore = firebase.firestore();
    const eventsRef = firestore.collection("events");
 
